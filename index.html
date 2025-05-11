@@ -33,6 +33,32 @@
       margin-top: 5px;
     }
 
+    form {
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 250px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0056b3;
+      color: white;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+
     footer {
       position: fixed;
       bottom: 10px;
@@ -43,21 +69,38 @@
 </head>
 <body>
   <header>
-    <img src="ncapture Bot.png" alt="NCAPTURE Logo" class="logo" />
+    <img src="logo.png" alt="NCAPTURE Logo" class="logo" />
     <h1>Welcome to NCAPTURE 13</h1>
     <p>Secure your license key and get started with NCAPTURE OS</p>
   </header>
-  <div class="box">
-        <h1>NCAPTURE 13 License Check</h1>
-        <form action="/verify" method="post">
-            <input type="text" name="name" placeholder="Full Name" required><br>
-            <input type="email" name="email" placeholder="Email Address" required><br>
-            <input type="text" name="license" placeholder="License Key" required><br>
-            <button type="submit">Verify</button>
-        </form>
-    </div>
+
+  <form id="licenseForm">
+    <input type="text" id="licenseKey" placeholder="Enter your license key" />
+    <button type="submit">Verify</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
   <footer>
     &copy; 2025 NCAPTURE 13 Team. All rights reserved.
   </footer>
+
+  <script>
+    const validKeys = ["ABCD-1234-EFGH-5678", "bwfd hjxk hizi zltz"]; // Add your real keys here
+
+    document.getElementById("licenseForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const input = document.getElementById("licenseKey").value.trim();
+      const message = document.getElementById("message");
+
+      if (validKeys.includes(input)) {
+        message.style.color = "lightgreen";
+        message.textContent = "✅ License verified! Welcome to NCAPTURE.";
+      } else {
+        message.style.color = "red";
+        message.textContent = "❌ Invalid license key. Please try again.";
+      }
+    });
+  </script>
 </body>
 </html>
