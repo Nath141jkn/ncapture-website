@@ -86,21 +86,35 @@
   </footer>
 
   <script>
-    const validKeys = ["ABCD-1234-EFGH-5678", "bwfd hjxk hizi zltz"]; // Add your real keys here
+  // These are valid keys
+  const validKeys = ["ABCD-1234-EFGH-5678", "bwfd hjxk hizi zltz"];
 
-    document.getElementById("licenseForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const input = document.getElementById("licenseKey").value.trim();
-      const message = document.getElementById("message");
+  document.getElementById("licenseForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent the page from refreshing
 
-      if (validKeys.includes(input)) {
-        message.style.color = "lightgreen";
-        message.textContent = "✅ License verified! Welcome to NCAPTURE.";
-      } else {
-        message.style.color = "red";
-        message.textContent = "❌ Invalid license key. Please try again.";
-      }
-    });
-  </script>
+    const licenseKey = document.getElementById("licenseKey").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message");
+
+    if (validKeys.includes(licenseKey)) {
+      // Save license and email to the browser
+      localStorage.setItem("verifiedKey", licenseKey);
+      localStorage.setItem("verifiedEmail", email);
+
+      message.style.color = "lightgreen";
+      message.textContent = "✅ Verified! License saved. We'll contact you soon.";
+
+      // Optional: download license info to file
+      const blob = new Blob([`License: ${licenseKey}\nEmail: ${email}`], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "license_info.txt";
+      link.click();
+    } else {
+      message.style.color = "red";
+      message.textContent = "❌ Invalid license key. Try again.";
+    }
+  });
+</script>
 </body>
 </html>
