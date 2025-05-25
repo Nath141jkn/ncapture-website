@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>NCAPTURE License Verification</title>
-    <style>
-        body {
-            background: #002c61;
-            font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
-            padding-top: 50px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
-            border-radius: 10px;
-        }
-        .form-box {
-            background: #04386f;
-            display: inline-block;
-            padding: 20px 40px;
-            border-radius: 20px;
-        }
-    </style>
+  <title>NCAPTURE License Sender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #002f5f;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    form {
+      background: #033e7b;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    input[type="email"], input[type="text"] {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      border-radius: 5px;
+      border: none;
+    }
+    input[type="submit"] {
+      background: #00ccff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="form-box">
-        <h2>🔐 NCAPTURE License Key</h2>
-        <form method="POST" action="/submit">
-            <input type="email" name="email" placeholder="Enter your email" required><br>
-            <input type="text" name="license" placeholder="Enter your license key" required><br>
-            <button type="submit">Verify and Send</button>
-        </form>
-    </div>
+  <h2>Send NCAPTURE License Key</h2>
+  <form action="/send" method="get">
+    <input type="email" name="to" placeholder="Recipient Email" required><br>
+    <input type="text" name="key" placeholder="License Key" required><br>
+    <input type="submit" value="Send License">
+  </form>
 </body>
 </html>
