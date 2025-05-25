@@ -11,8 +11,8 @@ def home():
 
 @app.route('/send', methods=['GET'])
 def send_email():
-    sender_email = "your_email@gmail.com"
-    sender_password = "your_app_password"
+    sender_email = "ncapture13@gmail.com"
+    sender_password = ""
 
     # Get parameters from the URL
     recipient_email = request.args.get('to')
