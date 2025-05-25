@@ -1,41 +1,29 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template
 import smtplib
-from email.message import EmailMessage
-import os
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'NCAPTURE License Server is Running'
+    return render_template('form.html')
 
 @app.route('/send', methods=['GET'])
 def send_email():
-    sender_email = "ncapture13@gmail.com"
-    sender_password = "bwfdhjxkhizizltz"
+    recipient = request.args.get('to', 'ncapture13@gmail.com')
+    key = request.args.get('key', 'No license key provided')
 
-    # Get parameters from the URL
-    recipient_email = request.args.get('to')
-    license_key = request.args.get('key')
+    msg = MIMEText(f"Hello, your NCAPTURE license key is:\n\n{key}")
+    msg['Subject'] = "Your NCAPTURE License Key"
+    msg['From'] = "ncapture13@gmail.com"
+    msg['To'] = recipient
 
-    # Validate inputs
-    if not recipient_email or not license_key:
-        return jsonify({'error': 'Missing "to" or "key" parameter'}), 400
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.login("ncapture13@gmail.com", "bwfdhjxkhizizltz")
+    server.sendmail("ncapture13@gmail.com", recipient, msg.as_string())
+    server.quit()
 
-    # Create the email message
-    msg = EmailMessage()
-    msg['Subject'] = 'Your NCAPTURE License Key'
-    msg['From'] = sender_email
-    msg['To'] = recipient_email
-    msg.set_content(f"Hello,\n\nYour NCAPTURE 13 license key is:\n\n{license_key}\n\nThank you for your purchase!")
-
-    try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(sender_email, sender_password)
-            smtp.send_message(msg)
-        return jsonify({'status': 'Email sent successfully!'}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    return "Email sent successfully!"
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
