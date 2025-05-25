@@ -12,7 +12,7 @@ def home():
 @app.route('/send', methods=['GET'])
 def send_email():
     sender_email = "ncapture13@gmail.com"
-    sender_password = "hzbvgqfnrjwwltlb"
+    sender_password = "bwfdhjxkhizizltz"
 
     # Get parameters from the URL
     recipient_email = request.args.get('to')
